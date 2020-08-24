@@ -1,3 +1,4 @@
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -57,8 +58,13 @@ class _ContactFormState extends State<ContactForm> {
                     String name = _nameController.text;
                     String account = _accountController.text;
                     if (name != null && account != null) {
-                      final Contact novoContato = Contact(name: name, accountNumber: int.tryParse(account));
-                      Navigator.pop(context, novoContato);
+                      final Contact novoContato = Contact(
+                          name: name, accountNumber: int.tryParse(account));
+                      save(novoContato).then((id) {
+                        debugPrint('O id do elemento salvo: $id');
+                        Navigator.pop(context, novoContato);
+                      });
+
                     }
                   },
                 ),

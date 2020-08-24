@@ -1,8 +1,10 @@
 class Contact {
+
+  int id;
   String name;
   int accountNumber;
 
-  Contact({this.name, this.accountNumber});
+  Contact({this.id, this.name, this.accountNumber});
 
   @override
   String toString() {
