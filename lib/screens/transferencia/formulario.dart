@@ -12,6 +12,13 @@ class _FormularioTransferenciaState extends State<FormularioTransferencia> {
   TextEditingController _controladorCampoNumeroConta;
 
   TextEditingController _controladorCampoValor;
+  static const _rotuloNumeroConta = 'Número da Conta';
+  static const	_rotuloCampoValor	=	'Valor';
+  static const	_dicaCampoValor	=	'0.00';
+  static const	_rotuloCampoNumeroConta	=	'Número	da	conta';
+  static const	_dicaCampoNumeroConta	=	'0000';
+  static const	_textoBotaoConfirmar	=	'Confirmar';
+  String	_tituloAppBar	=	'Criando	transferência';
 
   @override
   void initState() {
@@ -24,22 +31,22 @@ class _FormularioTransferenciaState extends State<FormularioTransferencia> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criando Transferência'),
+        title: Text(_tituloAppBar),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Editor(
                 controlador: _controladorCampoNumeroConta,
-                rotulo: 'Número da Conta',
-                dica: '0000'),
+                rotulo: _rotuloNumeroConta,
+                dica: _dicaCampoNumeroConta),
             Editor(
                 controlador: _controladorCampoValor,
-                rotulo: 'Valor',
-                dica: '00.0',
+                rotulo: _rotuloCampoValor,
+                dica: _dicaCampoValor,
                 icone: Icons.monetization_on),
             RaisedButton(
-              child: Text('Confirmar'),
+              child: Text(_textoBotaoConfirmar),
               onPressed: () => _criaTransferencia(context),
             )
           ],

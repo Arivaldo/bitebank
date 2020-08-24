@@ -1,8 +1,14 @@
-import 'package:bytebank/screen/lista_transferencia.dart';
+import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/screens/contacts/contacts_list.dart';
+import 'package:bytebank/screens/dashboard/dashboard.dart';
+import 'package:bytebank/screens/transferencia/lista.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(ByteBankApp());
+void main() {
+  runApp(ByteBankApp());
+  createDatabase();
+}
 
 class ByteBankApp extends StatelessWidget {
   @override
@@ -15,12 +21,8 @@ class ByteBankApp extends StatelessWidget {
               buttonColor: Colors.blueAccent[700],
               textTheme: ButtonTextTheme.primary)),
       home: Scaffold(
-        body: ListaTransferencia(),
+        body: Dashboard(),
       ),
     );
   }
 }
-
-
-
-
