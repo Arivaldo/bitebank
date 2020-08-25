@@ -1,4 +1,5 @@
 import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class _ContactFormState extends State<ContactForm> {
   TextEditingController _nameController;
 
   TextEditingController _accountController;
+
+  final ContactDao _dao = ContactDao();
 
   @override
   void initState() {
@@ -60,11 +63,10 @@ class _ContactFormState extends State<ContactForm> {
                     if (name != null && account != null) {
                       final Contact novoContato = Contact(
                           name: name, accountNumber: int.tryParse(account));
-                      save(novoContato).then((id) {
+                      _dao.save(novoContato).then((id) {
                         debugPrint('O id do elemento salvo: $id');
                         Navigator.pop(context, novoContato);
                       });
-
                     }
                   },
                 ),
