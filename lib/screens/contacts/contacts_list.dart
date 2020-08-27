@@ -18,11 +18,11 @@ class _ContactsListState extends State<ContactsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contacts'),
+        title: Text('Transfer'),
       ),
       body: FutureBuilder<List<Contact>>(
-          future:
-              Future.delayed(Duration(seconds: 1)).then((value) => _dao.findAll()),
+          future: _dao.findAll(),
+          //Future.delayed(Duration(seconds: 1)).then((value) => _dao.findAll()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
