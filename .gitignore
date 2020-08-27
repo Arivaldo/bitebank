@@ -50,3 +50,11 @@ ios/Flutter/Debug.xcconfig
 ios/Runner.xcodeproj/project.pbxproj
 ios/Runner.xcworkspace/contents.xcworkspacedata
 android/.project
+android/app/.classpath
+android/.settings/org.eclipse.buildship.core.prefs
+android/app/.project
+android/app/.settings/org.eclipse.buildship.core.prefs
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+ios/Runner.xcodeproj/project.pbxproj
+ios/Runner.xcworkspace/contents.xcworkspacedata
