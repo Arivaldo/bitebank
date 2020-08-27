@@ -1,11 +1,13 @@
+import 'package:bytebank/components/centered_message.dart';
+import 'package:bytebank/components/progresso.dart';
+import 'package:bytebank/http/webclient.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
 
 import 'formulario.dart';
 
 class ListaTransferencia extends StatefulWidget {
-  final List _transferencias = List();
-
   @override
   State<StatefulWidget> createState() {
     return ListaTransferenciasState();
@@ -13,7 +15,7 @@ class ListaTransferencia extends StatefulWidget {
 }
 
 class ListaTransferenciasState extends State<ListaTransferencia> {
-  static const _tituloAppBar = 'Transferências';
+  static const _tituloAppBar = 'Transactions';
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +24,38 @@ class ListaTransferenciasState extends State<ListaTransferencia> {
         title: Text(_tituloAppBar),
         actions: [
           IconButton(
-            icon: Icon(Icons.lightbulb_outline), onPressed: () {
-              
-          },
+            icon: Icon(Icons.lightbulb_outline),
+            onPressed: () {},
           )
         ],
       ),
-      body: ListView.builder(
-          itemCount: widget._transferencias.length,
-          itemBuilder: (context, indice) =>
-              ItemTransferencia(widget._transferencias[indice])),
+      body: FutureBuilder<List<Transaction>>(
+          future:
+              Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Progresso();
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return CenteredMessage(
+                  'Erro no Servidor',
+                  icon: Icons.error,
+                );
+              }
+              if (snapshot.data.isNotEmpty) {
+                return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, indice) =>
+                        ItemTransferencia(snapshot.data[indice]));
+              } else {
+                return CenteredMessage(
+                  'No transactions found',
+                  icon: Icons.warning,
+                );
+              }
+            }
+            return Text('Unknown Error');
+          }),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -44,7 +68,7 @@ class ListaTransferenciasState extends State<ListaTransferencia> {
                 'Transfarencia recebida no ListaTransferencias: $tranferenciaRecebida');
             if (tranferenciaRecebida != null) {
               setState(() {
-                widget._transferencias.add(tranferenciaRecebida);
+                //
               });
             }
           });
@@ -55,7 +79,7 @@ class ListaTransferenciasState extends State<ListaTransferencia> {
 }
 
 class ItemTransferencia extends StatelessWidget {
-  final Transferencia _transferencia;
+  final Transaction _transferencia;
 
   const ItemTransferencia(this._transferencia);
 
@@ -64,8 +88,8 @@ class ItemTransferencia extends StatelessWidget {
     return Card(
         child: ListTile(
       leading: Icon(Icons.monetization_on),
-      title: Text(_transferencia.valor.toString()),
-      subtitle: Text(_transferencia.numeroConta.toString()),
+      title: Text(_transferencia.value.toString()),
+      subtitle: Text(_transferencia.contact.accountNumber.toString()),
     ));
   }
 }

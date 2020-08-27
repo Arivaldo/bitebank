@@ -1,4 +1,5 @@
-import 'package:bytebank/screens/contacts/contacts_list.dart';
+
+import 'package:bytebank/screens/transferencia/lista.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -45,12 +46,9 @@ class Dashboard extends StatelessWidget {
                 _FeatureItem(
                   'Transaction Feed',
                   Icons.description,
-                  onClick: () {},
-                ),
-                _FeatureItem(
-                  'Transaction Feed',
-                  Icons.description,
-                  onClick: () {},
+                  onClick: () {
+                    _showTransactionList(context);
+                  },
                 ),
               ],
             ),
@@ -61,12 +59,22 @@ class Dashboard extends StatelessWidget {
   }
 }
 
+void _showTransactionList(BuildContext context) {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => ListaTransferencia(),
+    ),
+  );
+}
+
 class _FeatureItem extends StatelessWidget {
   final String name;
   final IconData icon;
   final Function onClick;
 
-  const _FeatureItem(this.name, this.icon, {@required this.onClick});
+  const _FeatureItem(this.name, this.icon, {@required this.onClick})
+      : assert(icon != null),
+        assert(onClick != null);
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +104,6 @@ class _FeatureItem extends StatelessWidget {
           ),
           onTap: () {
             onClick();
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ContactsList()));
           },
         ),
       ),

@@ -1,4 +1,4 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/components/progresso.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contacts/contact_form.dart';
@@ -18,26 +18,14 @@ class _ContactsListState extends State<ContactsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transfer'),
+        title: Text('Contacts'),
       ),
       body: FutureBuilder<List<Contact>>(
           future: _dao.findAll(),
           //Future.delayed(Duration(seconds: 1)).then((value) => _dao.findAll()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Loading'),
-                    )
-                  ],
-                ),
-              );
+              return Progresso();
             } else if (snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
                   itemCount: snapshot.data.length,
@@ -62,6 +50,7 @@ class _ContactsListState extends State<ContactsList> {
     );
   }
 }
+
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
