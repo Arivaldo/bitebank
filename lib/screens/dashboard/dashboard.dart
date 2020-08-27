@@ -30,76 +30,76 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  color: Theme.of(context).primaryColor,
-                  child: InkWell(
-                    child: Container(
-                      height: 100,
-                      width: 150,
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.monetization_on,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          Text(
-                            'Transfer',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          )
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ContactsList()));
-                    },
-                  ),
+          Container(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _FeatureItem(
+                  'Tranfer',
+                  Icons.monetization_on,
+                  onClick: () {
+                    debugPrint('Transfer was clicked');
+                  },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  color: Theme.of(context).primaryColor,
-                  child: InkWell(
-                    child: Container(
-                      height: 100,
-                      width: 150,
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.monetization_on,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          Text(
-                            'Transfer',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          )
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ContactsList()));
-                    },
-                  ),
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () {},
                 ),
-              ),
-            ],
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () {},
+                ),
+              ],
+            ),
           ),
-
         ],
+      ),
+    );
+  }
+}
+
+class _FeatureItem extends StatelessWidget {
+  final String name;
+  final IconData icon;
+  final Function onClick;
+
+  const _FeatureItem(this.name, this.icon, {@required this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        color: Theme.of(context).primaryColor,
+        child: InkWell(
+          child: Container(
+            width: 150,
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  this.icon,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                Text(
+                  this.name,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )
+              ],
+            ),
+          ),
+          onTap: () {
+            onClick();
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => ContactsList()));
+          },
+        ),
       ),
     );
   }
