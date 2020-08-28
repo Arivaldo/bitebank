@@ -2,6 +2,7 @@ import 'package:bytebank/components/progresso.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contacts/contact_form.dart';
+import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +29,16 @@ class _ContactsListState extends State<ContactsList> {
               return Progresso();
             } else if (snapshot.connectionState == ConnectionState.done) {
               return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (ctx, idx) => _ContactItem(snapshot.data[idx]));
+                itemCount: snapshot.data.length,
+                itemBuilder: (ctx, idx) => _ContactItem(
+                  snapshot.data[idx],
+                  onClick: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FormularioTransferencia(contact: snapshot.data[idx],),
+                    ));
+                  },
+                ),
+              );
             }
 
             return Text('Unknown Error');
@@ -51,16 +60,17 @@ class _ContactsListState extends State<ContactsList> {
   }
 }
 
-
 class _ContactItem extends StatelessWidget {
   final Contact contact;
+  final Function onClick;
 
-  const _ContactItem(this.contact);
+  const _ContactItem(this.contact, {@required this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: this.onClick,
         title: Text(
           this.contact.name,
           style: TextStyle(fontSize: 24.0),

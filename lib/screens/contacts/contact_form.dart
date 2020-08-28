@@ -4,6 +4,7 @@ import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
 class ContactForm extends StatefulWidget {
+
   @override
   _ContactFormState createState() => _ContactFormState();
 }

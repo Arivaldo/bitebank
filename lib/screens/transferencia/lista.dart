@@ -1,6 +1,6 @@
 import 'package:bytebank/components/centered_message.dart';
 import 'package:bytebank/components/progresso.dart';
-import 'package:bytebank/http/webclient.dart';
+import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'formulario.dart';
 
 class ListaTransferencia extends StatefulWidget {
+
+  final TransactionWebClient _client = TransactionWebClient();
+
   @override
   State<StatefulWidget> createState() {
     return ListaTransferenciasState();
@@ -30,8 +33,8 @@ class ListaTransferenciasState extends State<ListaTransferencia> {
         ],
       ),
       body: FutureBuilder<List<Transaction>>(
-          future:
-              Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
+          future: widget._client.findAll(),
+          //Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Progresso();
